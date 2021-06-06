@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas图片压缩</title>
+</head>
+<body>
+
+  <input type="file" id="upload"/>
+
+  <script>
+
+    const ACCEPT = ['image/jpg', 'image/png', 'image/jpeg'];
+    const MAXSIZE = 3 * 1024 * 1024;
+
+    function convertImageToBase64(file) {
+      return new Promise(resolve => {
+        let reader = new FileReader();
+        reader.addEventListener('load', e => {
+          const base64Image = e.target.result;
+          reader = null;
+          resolve(compress(base64Image));
+        });
+        reader.readAsDataURL(file);
+      })
+
+    }
+
+    function compress(base64Image) {
+      let maxW = 512;
+      let maxH = 512;
+      const image = new Image();
+      image.addEventListener('load', e => {
+        let ratio;
+        let needCompress = maxH < image.naturalHeight || maxW < image.naturalWidth;
+        needCompress && (ratio = Math.max(image.naturalHeight / maxH, image.naturalWidth / maxW));
+
+        const canvas = document.createElement('canvas');
+        canvas.width = image.naturalWidth / ratio;
+        canvas.height = image.naturalHeight / ratio;
+        canvas.style.visibility = 'hidden';
+        document.body.appendChild(canvas);
+
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        canvas.remove();
+
+        const compressImage = canvas.toDataURL('image/jpeg', 0.1);
+        console.log(compressImage);
+        const _image = new Image();
+        _image.src = compressImage;
+        document.body.appendChild(_image);
+
+      });
+      image.src = base64Image;
+      // document.body.appendChild(image);
+    }
+
+    const upload = document.getElementById('upload');
+    upload.addEventListener('change', e => {
+      const [file] = e.target.files;
+      if (!file)  return;
+      const { type: fileType, size: fileSize } = file;
+      if (!ACCEPT.includes(fileType)) {
+        alert('不支持' + fileType + '文件类型!');
+        upload.value = '';
+        return;
+      }
+      if (fileSize > MAXSIZE) {
+        alert('文件超出大小限制！');
+        upload.value = '';
+        return;
+      }
+
+      // 图片压缩
+      convertImageToBase64(file).then(res => {
+
+      });
+    });
+
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ZRender</title>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/zrender/4.3.2/zrender.js"></script>
+
+</head>
+<body>
+
+<div id="container" style="width: 800px; height: 800px"></div>
+
+<script>
+  const zr = zrender.init(document.getElementById('container'));
+  /* 绘制一个矩形 */
+  var rect = new zrender.Rect({
+    // 形状
+    shape: {
+      x: 0,
+      y: 0,
+      width: 50,
+      height: 50
+    },
+    style: {
+      fill: 'red',
+      // 边框宽度
+      lineWidth: 0
+    }
+  });
+
+  /* 绘制一条线 */
+  var line = new zrender.Polyline({
+    shape: {
+      points: [
+        [100, 100],
+        [300, 200],
+        [150, 500]
+      ]
+    },
+    style: {
+      stroke: '#0000ff',
+      lineWidth: 3
+    }
+  });
+
+  /* 绘制一个圆 */
+  var circle = new zrender.Circle({
+    shape:{
+      cx:366,
+      cy:366,
+      r:50
+    },
+    style:{
+      fill:'#0fa400',
+      stroke:'#eeaa45',
+      lineWidth:2
+    }
+  });
+
+  zr.add(rect);
+  zr.add(line);
+  zr.add(circle);
+
+
+  /**
+   * zrender绘图
+   * 1、引入zrender库
+   * 2、编写div容器
+   * 3、初始化zrender对象
+   * 4、初始化zrender绘图对象
+   * 5、调用zrender add方法绘图
+   */
+
+</script>
+
+</body>
+</html>

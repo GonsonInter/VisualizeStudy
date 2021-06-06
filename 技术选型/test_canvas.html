@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas</title>
+
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+  </style>
+
+</head>
+<body>
+  <canvas id="canvas" width="800" height="800"></canvas>
+
+  <script>
+
+    const canvas = document.getElementById('canvas');
+    canvas.style.backgroundColor = 'pink';
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ff0000';
+    ctx.fillRect(0, 0, 50, 50);
+
+    ctx.beginPath();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = '#000';
+    ctx.moveTo(180, 320);
+    ctx.lineTo(550, 560);
+    ctx.lineTo(730, 325);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.lineWidth =  2;
+    ctx.strokeStyle = 'green';
+    ctx.fillStyle = 'blue';
+    ctx.arc(300, 200, 50, 0, 2 * Math.PI, true);
+    ctx.stroke();
+    ctx.fill();
+
+    /**
+     * canvas的绘图流程
+     * 1、编写canvas标签（指定宽高）
+     * 2、获取canvas的DOM元素
+     * 3、获取canvas上下文对象
+     * 4、设置绘图属性
+     * 5、调用绘图API
+     */
+
+
+  </script>
+</body>
+</html>
